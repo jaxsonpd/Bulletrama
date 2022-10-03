@@ -29,9 +29,9 @@ void playerConfig(uint8_t moveSpeed, uint8_t startHealth, uint8_t maxHeight);
 /** Intialise the player
  * @param x x position of the player
  * @param y y position of the player
- * @return pointer to a Player_t struct
+ * @return Player_t struct
  */
-Player_t* playerInit(uint8_t x, uint8_t y);
+Player_t playerInit(uint8_t x, uint8_t y);
 
 /** Check to see if the player needs to be moved
  * @param player pointer to a Player_t struct

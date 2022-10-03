@@ -34,15 +34,16 @@ void playerConfig(uint8_t moveSpeed, uint8_t startHealth, uint8_t maxHeight) {
 /** Intialise the player
  * @param x x position of the player
  * @param y y position of the player
- * @return pointer to a Player_t struct
+ * @return Player_t struct
  */
-Player_t* playerInit(uint8_t x, uint8_t y) {
-    Player_t* player = malloc(sizeof(Player_t));
-    player->x = x;
-    player->y = y;
-    player->health = startHealth;
-    player->hasFired = false;
-    player->canFire = true;
+Player_t playerInit(uint8_t x, uint8_t y) {
+    Player_t player = {
+        .x = x,
+        .y = y,
+        .health = startHealth,
+        .hasFired = false,
+        .canFire = true
+    };
 
     return player;
 }
@@ -51,9 +52,6 @@ Player_t* playerInit(uint8_t x, uint8_t y) {
  * @param player pointer to a Player_t struct
  */
 void playerUpdate(Player_t* player) {
-    // Intialise the navswitch (Not needed as done in navswitch_update())
-    // navswitch_init(); 
-
     // Update the navswitch
     navswitch_update();
 

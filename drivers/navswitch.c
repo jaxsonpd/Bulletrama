@@ -46,8 +46,7 @@ static navswitch_state_t navswitch_state[NAVSWITCH_NUM];
     last call to navswitch_update
     @param  navswitch index of navswitch to select
     @return 1 if navswitch changed from up to down otherwise 0  */
-bool
-navswitch_push_event_p (uint8_t navswitch)
+bool navswitch_push_event_p (uint8_t navswitch)
 {
     return navswitch_state[navswitch].current
         && !navswitch_state[navswitch].previous;
@@ -58,8 +57,7 @@ navswitch_push_event_p (uint8_t navswitch)
     last call to navswitch_update
     @param  navswitch index of navswitch to select
     @return 1 if navswitch changed from down to up otherwise 0  */
-bool
-navswitch_release_event_p (uint8_t navswitch)
+bool navswitch_release_event_p (uint8_t navswitch)
 {
     return !navswitch_state[navswitch].current 
         && navswitch_state[navswitch].previous;
@@ -69,8 +67,7 @@ navswitch_release_event_p (uint8_t navswitch)
 /** Return true if navswitch down (pushed).
     @param  navswitch index of navswitch to select
     @return 1 if navswitch down otherwise 0  */
-bool
-navswitch_down_p (uint8_t navswitch)
+bool navswitch_down_p (uint8_t navswitch)
 {
     return navswitch_state[navswitch].current;
 }
@@ -79,16 +76,14 @@ navswitch_down_p (uint8_t navswitch)
 /** Return true if navswitch up (released).
     @param  navswitch index of navswitch to select
     @return 1 if navswitch down otherwise 0  */
-bool
-navswitch_up_p (uint8_t navswitch)
+bool navswitch_up_p (uint8_t navswitch)
 {
     return !navswitch_state[navswitch].current;
 }
 
 
 /** Poll all the navswitches and update their state.  */
-void
-navswitch_update (void)
+void navswitch_update (void)
 {
     uint8_t i;
 
