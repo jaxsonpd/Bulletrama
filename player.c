@@ -7,28 +7,21 @@
 
 #include "player.h"
 #include "navswitch.h"
-
-// Constants
-#define MAX_HORIZONTAL 7
-#define UP NAVSWITCH_WEST
-#define DOWN NAVSWITCH_EAST
-#define LEFT NAVSWITCH_SOUTH
-#define RIGHT NAVSWITCH_NORTH
-#define FIRE NAVSWITCH_PUSH
+#include "game.h"
 
 // Global variables
-uint8_t moveSpeed, startHealth, maxHeight; 
+uint8_t moveSpeed, startHealth, maxMoveHeight; 
 
 // ==================================================== Function Definitions ====================================================
 /** Set the player variables
  * @param moveSpeed the speed the player moves at
  * @param startHealth the health the player starts with
- * @param maxHeight the maximum height the player can move to
+ * @param maxMoveHeight the maximum height the player can move to
  */
-void playerConfig(uint8_t moveSpeed, uint8_t startHealth, uint8_t maxHeight) {
+void playerConfig(uint8_t moveSpeed, uint8_t startHealth, uint8_t maxMoveHeight) {
     moveSpeed = moveSpeed;
     startHealth = startHealth;
-    maxHeight = maxHeight;
+    maxMoveHeight = maxMoveHeight;
 }
 
 /** Intialise the player
@@ -58,7 +51,7 @@ void playerUpdate(Player_t* player) {
     // Check to see if the nav switch has moved
     if (navswitch_push_event_p(UP)) {
         // User is trying to move up
-        if (player->y < maxHeight) {
+        if (player->y < maxMoveHeight) {
             // Move the player up
             player->y += moveSpeed;
         } else {
@@ -85,7 +78,7 @@ void playerUpdate(Player_t* player) {
         }
     } else if (navswitch_push_event_p(RIGHT)) {
         // The user is trying to move the right
-        if (player->x < MAX_HORIZONTAL) {
+        if (player->x < MAX_X) {
             // Move the player right
             player->x += moveSpeed;
         } else {
