@@ -1,7 +1,7 @@
 /**
  * @file game.c
  * @brief The main excution file for the game
- * @author Jack Duignan 
+ * @author Jack Duignan and Ben Gunn.
  * @date 2022-10-03
  */
 
