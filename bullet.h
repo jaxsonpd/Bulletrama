@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * @file bullet.h
  * @author ben gunn (bgu37)
@@ -43,3 +44,6 @@ Bullet_t BulletInit(uint8_t x, uint8_t y, uint8_t owner);
 void playerUpdate(Player_t* player);
 
 #endif
+=======
+
+>>>>>>> e922864636731ac02554f5026a8145d577ea135f
