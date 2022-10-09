@@ -28,7 +28,7 @@ typedef struct {
 /** Set the Bullet variables
  * @param BulletSpeed the speed the bullet moves at
  */
-void BulletConfig(uint8_t speed);
+void bulletConfig(uint8_t speed);
 
 /** Intialise the bullet
  * @param x x position of the bullet
@@ -36,12 +36,12 @@ void BulletConfig(uint8_t speed);
  * @param owner direction of bullet and ownership 0 == enemy
  * @return Bullet_t struct
  */
-Bullet_t BulletInit(uint8_t x, uint8_t y, uint8_t owner);
+Bullet_t bulletInit(uint8_t x, uint8_t y, uint8_t owner);
 
 /** Check to see if the player needs to be moved
  * @param player pointer to a Player_t struct
  */
-void playerUpdate(Player_t* player);
+void bulletUpdate(Bullet_t* bullet);
 
 #endif
 =======
