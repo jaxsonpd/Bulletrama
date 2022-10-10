@@ -32,7 +32,7 @@ bool pause = false;
  * @param player pointer to a empty Player_t struct
  * @param gameBoard pointer to a empty GameBoard_t struct
  */
-void levelOneInit(Player_t* player, int* gameBoard) {
+void levelOneInit(Player_t* player) {
     // Set the player variables
     playerConfig(L1_MOVE_SPEED, L1_START_HEALTH, L1_MAX_HEIGHT);
 
@@ -40,17 +40,21 @@ void levelOneInit(Player_t* player, int* gameBoard) {
     *player = playerInit(0, 0);
 
     // Initialise the game board
+    initGameBoard();
 }
 
 /** Run the game for Level 1
  * 
  */
-void levelOne() {
+void levelOne(void) {
     // Tell the other board that level 1 is being played
 
     // Initialise the game
-    Player_t* player;
-    int* gameBoard;
+    Player_t* player = {0};
+
+    int* bullets[1] = {0};
+    int numBullets = 0;
+    
     uint8_t walls[MAX_Y][MAX_X] = {
         {0, 0, 0, 0, 0, 0, 0},
         {1, 1, 1, 1, 1, 1, 1},
@@ -59,7 +63,7 @@ void levelOne() {
         {0, 0, 0, 0, 0, 0, 0}
     };
 
-    levelOneInit(player, gameBoard);
+    levelOneInit(player);
 
     // Start the game loop
     while (!gameOver) {
@@ -73,7 +77,7 @@ void levelOne() {
             // Send message to other board to pause
 
             // Pause the game
-            displayGamePause();
+            // displayGamePause();
 
             pause = false;
         }
@@ -98,14 +102,14 @@ void levelOne() {
         // Repeat
     }
     // Display game over screen
-    displayGameOver();
+    // displayGameOver();
 
     if (!won) {
         // Display win screen
-        displayGameDefeat();
+        // displayGameDefeat();
     } else {
         // Display lose screen
-        displayGameWin();
+        // displayGameWin();
     }
 
     gameOver = false;

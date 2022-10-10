@@ -12,6 +12,7 @@
 #define GAMEDISPLAY_H
 
 #include "player.h"
+#include "game.h"
 
 /** Display the game board
  * @param player a pointer to the player struct
@@ -19,26 +20,11 @@
  * @param walls a pointer to an array of walls
  * @param numBullets the length of the bullets array
  */
-void displayGameBoard(Player_t* player, int* bullets, uint8_t* walls, uint8_t numBullets);
+void displayGameBoard(Player_t* player, int* bullets[], uint8_t walls[MAX_Y][MAX_X], uint8_t numBullets);
 
 /** Initilise the game board
  * 
  */
-void initGameBoard();
+void initGameBoard(void);
 
-/** Display the game over screen
- */
-void displayGameOver(void);
-
-/** Display the game win screen
- */
-void displayGameWin(void);
-
-/** Display the game defeat screen
- */
-void displayGameDefeat(void);
-
-/** Display the game pause screen
- */
-void displayGamePause(void);
 #endif
