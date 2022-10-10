@@ -1,8 +1,8 @@
 /**
 * @file player.h
 * @brief Player movement and health management functions header file
-* @author Jack Duignan
-* @date 2016-11-30
+* @author Jack Duignan (Jdu80), 
+* @date 2020-11-30
 */
 
 #ifndef PLAYER_H
