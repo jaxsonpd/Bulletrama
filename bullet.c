@@ -19,12 +19,21 @@ uint8_t bulletSpeed, friend, enemy;
 /** Set the player variables
  * @param bulletSpeed the speed the bullet moves at
  * @param friend val 1 is my bullet
- * @param enemy val 0 is enemy
+ * @param enemy val -1 is enemy
  */
 
 void bulletConfig(uint8_t Speed) {
     bulletSpeed = Speed;
 }
+
+/**
+ * @brief declare the origin and bullet direction
+ * 
+ * @param x 
+ * @param y 
+ * @param owner 
+ * @return Bullet_t 
+ */
 
 Bullet_t bulletInit(uint8_t x, uint8_t y, uint8_t owner) 
 {
@@ -39,10 +48,7 @@ Bullet_t bulletInit(uint8_t x, uint8_t y, uint8_t owner)
 
 void bulletUpdate(Bullet_t* bullet)
 {
-    if (bullet->owner == 1) {
-        bullet->x += bulletSpeed;
-    } else {
-        bullet->x -= bulletSpeed;
-    }
-    
+
+    bullet->x += bullet->owner;
+  
 }
