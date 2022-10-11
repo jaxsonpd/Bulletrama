@@ -31,7 +31,7 @@ void bulletConfig(uint8_t Speed) {
  * 
  * @param x 
  * @param y 
- * @param owner 
+ * @param owner takes +1==friend  -1== enemy
  * @return Bullet_t 
  */
 
@@ -46,9 +46,11 @@ Bullet_t bulletInit(uint8_t x, uint8_t y, uint8_t owner)
     return bullet;
 }
 
+
+
 void bulletUpdate(Bullet_t* bullet)
 {
-
-    bullet->x += bullet->owner;
-  
+    bullet->y += bullet->owner;
 }
+
+

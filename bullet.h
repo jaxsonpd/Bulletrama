@@ -20,10 +20,18 @@
 typedef struct {
     uint8_t x;
     uint8_t y;
-    uint8_t owner;
+    int8_t owner;
     uint8_t speed;
      
 } Bullet_t;
+
+
+/**
+ * @brief define an array of 10 pointers to Bullet_t structs
+ * 
+ */
+typedef Bullet_t** Bullet_Array_t;
+
 
 /** Set the Bullet variables
  * @param BulletSpeed the speed the bullet moves at
@@ -38,8 +46,8 @@ void bulletConfig(uint8_t speed);
  */
 Bullet_t bulletInit(uint8_t x, uint8_t y, uint8_t owner);
 
-/** Check to see if the player needs to be moved
- * @param player pointer to a Player_t struct
+/** Update the location of the bullet
+ * @param player pointer to a Bullet_t struct
  */
 void bulletUpdate(Bullet_t* bullet);
 
