@@ -12,6 +12,7 @@
 #include "gameDisplay.h"
 #include "display.h"
 #include "game.h"
+#include "bullet.h"
 
 // ==================================================== Function Definitions ====================================================
 /** Initilise the game board 
