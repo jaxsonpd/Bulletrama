@@ -12,8 +12,8 @@
 #define GAME_H
 
 // Display constants
-#define MAX_X 7
-#define MAX_Y 5
+#define MAX_X 6
+#define MAX_Y 4
 
 // Game constants
 

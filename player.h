@@ -19,12 +19,7 @@ typedef struct {
     bool canFire; 
 } Player_t;
 
-// Constants
-#define UP NAVSWITCH_WEST
-#define DOWN NAVSWITCH_EAST
-#define LEFT NAVSWITCH_SOUTH
-#define RIGHT NAVSWITCH_NORTH
-#define FIRE NAVSWITCH_PUSH
+
 
 /** Set the player variables
  * @param moveSpeed the speed the player moves at

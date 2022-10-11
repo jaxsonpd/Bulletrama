@@ -9,6 +9,13 @@
 #include "navswitch.h"
 #include "game.h"
 
+// Constants
+#define UP NAVSWITCH_WEST
+#define DOWN NAVSWITCH_EAST
+#define LEFT NAVSWITCH_SOUTH
+#define RIGHT NAVSWITCH_NORTH
+#define FIRE NAVSWITCH_PUSH
+
 // Global variables
 uint8_t moveSpeed, startHealth, maxMoveHeight; 
 
@@ -46,44 +53,32 @@ Player_t playerInit(uint8_t x, uint8_t y) {
  */
 void playerUpdate(Player_t* player) {
     // Update the navswitch
-    navswitch_update();
+    
 
     // Check to see if the nav switch has moved
     if (navswitch_push_event_p(UP)) {
         // User is trying to move up
-        if (player->y < maxMoveHeight) {
+        if (player->y <= maxMoveHeight) {
             // Move the player up
-            player->y += moveSpeed;
-        } else {
-            // Player is at the top of the screen
-            // Do nothing
-        }
+            player->y += 1;
+        } 
     } else if (navswitch_push_event_p(DOWN)) {
         // The user is trying to move down
         if (player->y > 0) {
             // Move the player down
-            player->y -= moveSpeed;
-        } else {
-            // Player is at the bottom of the screen
-            // Do nothing
-        }
+            player->y -= 1;
+        } 
     } else if (navswitch_push_event_p(LEFT)) {
         // The user is trying to move left
         if (player->x > 0) {
             // Move the player left
-            player->x -= moveSpeed;
-        } else {
-            // Player is at the left of the screen
-            // Do nothing
-        }
+            player->x -= 1;
+        } 
     } else if (navswitch_push_event_p(RIGHT)) {
         // The user is trying to move the right
         if (player->x < MAX_X) {
             // Move the player right
-            player->x += moveSpeed;
-        } else {
-            // Player is at the right of the screen
-            // Do nothing
+            player->x += 1;
         }
     } else if (navswitch_push_event_p(FIRE)) {
         // The user is trying to fire
@@ -94,9 +89,6 @@ void playerUpdate(Player_t* player) {
             player->hasFired = true;
             // Set the player to not be able to fire
             player->canFire = false;
-        } else {
-            // The player cannot fire
-            // Do nothing
         }
     }
 
