@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /**
  * @file bullet.h
  * @author ben gunn (bgu37)
@@ -26,13 +25,6 @@ typedef struct {
 } Bullet_t;
 
 
-/**
- * @brief define an array of 10 pointers to Bullet_t structs
- * 
- */
-typedef Bullet_t** Bullet_Array_t;
-
-
 /** Set the Bullet variables
  * @param BulletSpeed the speed the bullet moves at
  */
@@ -52,6 +44,3 @@ Bullet_t bulletInit(uint8_t x, uint8_t y, uint8_t owner);
 void bulletUpdate(Bullet_t* bullet);
 
 #endif
-=======
-
->>>>>>> e922864636731ac02554f5026a8145d577ea135f

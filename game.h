@@ -17,9 +17,6 @@
 
 // Game constants
 
-// Level 1 constants
-#define L1_MOVE_SPEED 1
-#define L1_START_HEALTH 3
-#define L1_MAX_HEIGHT 2
+
 
 #endif

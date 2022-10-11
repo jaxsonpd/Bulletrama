@@ -13,6 +13,7 @@
 
 #include "player.h"
 #include "game.h"
+#include "bullet.h"
 
 /** Display the game board
  * @param player a pointer to the player struct
@@ -20,7 +21,7 @@
  * @param walls a pointer to an array of walls
  * @param numBullets the length of the bullets array
  */
-void displayGameBoard(Player_t* player, int* bullets[], uint8_t walls[MAX_Y][MAX_X], uint8_t numBullets);
+void displayGameBoard(Player_t* player, Bullet_t bullets[], uint8_t walls[MAX_Y + 1][MAX_X + 1], uint8_t numBullets);
 
 /** Initilise the game board
  * 

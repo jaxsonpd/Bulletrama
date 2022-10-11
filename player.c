@@ -25,10 +25,10 @@ uint8_t moveSpeed, startHealth, maxMoveHeight;
  * @param startHealth the health the player starts with
  * @param maxMoveHeight the maximum height the player can move to
  */
-void playerConfig(uint8_t moveSpeed, uint8_t startHealth, uint8_t maxMoveHeight) {
-    moveSpeed = moveSpeed;
-    startHealth = startHealth;
-    maxMoveHeight = maxMoveHeight;
+void playerConfig(uint8_t newMoveSpeed, uint8_t newStartHealth, uint8_t newMaxMoveHeight) {
+    moveSpeed = newMoveSpeed;
+    startHealth = newStartHealth;
+    maxMoveHeight = newMaxMoveHeight;
 }
 
 /** Intialise the player
@@ -52,33 +52,30 @@ Player_t playerInit(uint8_t x, uint8_t y) {
  * @param player pointer to a Player_t struct
  */
 void playerUpdate(Player_t* player) {
-    // Update the navswitch
-    
-
     // Check to see if the nav switch has moved
     if (navswitch_push_event_p(UP)) {
         // User is trying to move up
         if (player->y <= maxMoveHeight) {
             // Move the player up
-            player->y += 1;
+            player->y += moveSpeed;
         } 
     } else if (navswitch_push_event_p(DOWN)) {
         // The user is trying to move down
         if (player->y > 0) {
             // Move the player down
-            player->y -= 1;
+            player->y -= moveSpeed;
         } 
     } else if (navswitch_push_event_p(LEFT)) {
         // The user is trying to move left
         if (player->x > 0) {
             // Move the player left
-            player->x -= 1;
+            player->x -= moveSpeed;
         } 
     } else if (navswitch_push_event_p(RIGHT)) {
         // The user is trying to move the right
         if (player->x < MAX_X) {
             // Move the player right
-            player->x += 1;
+            player->x += moveSpeed;
         }
     } else if (navswitch_push_event_p(FIRE)) {
         // The user is trying to fire

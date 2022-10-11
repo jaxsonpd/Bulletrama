@@ -16,7 +16,7 @@ all: game.out
 
 
 # Compile: create object files from C source files.
-game.o: game.c ../../drivers/avr/system.h game.h player.h gameDisplay.h
+game.o: game.c ../../drivers/avr/system.h game.h player.h gameDisplay.h bullet.h ../../utils/pacer.h levels.h ../../drivers/navswitch.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 system.o: ../../drivers/avr/system.c ../../drivers/avr/system.h
@@ -27,11 +27,11 @@ player.o: player.c player.h ../../drivers/navswitch.h game.h
 
 navswitch.o: ../../drivers/navswitch.c ../../drivers/avr/delay.h ../../drivers/avr/pio.h ../../drivers/avr/system.h ../../drivers/navswitch.h
 	$(CC) -c $(CFLAGS) $< -o $@
-
+	
 pio.o: ../../drivers/avr/pio.c ../../drivers/avr/pio.h ../../drivers/avr/system.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-gameDisplay.o: gameDisplay.c gameDisplay.h game.h ../../drivers/display.h
+gameDisplay.o: gameDisplay.c gameDisplay.h game.h ../../drivers/display.h bullet.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 display.o: ../../drivers/display.c ../../drivers/avr/system.h ../../drivers/display.h ../../drivers/ledmat.h
@@ -40,9 +40,17 @@ display.o: ../../drivers/display.c ../../drivers/avr/system.h ../../drivers/disp
 ledmat.o: ../../drivers/ledmat.c ../../drivers/avr/pio.h ../../drivers/avr/system.h ../../drivers/ledmat.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
+bullet.o: bullet.c game.h bullet.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+pacer.o: ../../utils/pacer.c ../../drivers/avr/timer.h ../../drivers/avr/system.h ../../utils/pacer.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+timer.o: ../../drivers/avr/timer.c ../../drivers/avr/timer.h ../../drivers/avr/system.h
+	$(CC) -c $(CFLAGS) $< -o $@
 
 # Link: create ELF output file from object files.
-game.out: game.o system.o player.o navswitch.o pio.o gameDisplay.o display.o ledmat.o
+game.out: game.o system.o player.o navswitch.o pio.o gameDisplay.o display.o ledmat.o bullet.o pacer.o timer.o
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 

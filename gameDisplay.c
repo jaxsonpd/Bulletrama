@@ -24,7 +24,7 @@ void initGameBoard(void) {
 /** Display the walls of the game board
  * @param walls pointer to a 2D array of walls
  */
-static void displayWalls(uint8_t walls[MAX_Y][MAX_X]) {
+static void displayWalls(uint8_t walls[MAX_Y + 1][MAX_X + 1]) {
     // Display the walls
     for (uint8_t i = 0; i < MAX_Y; i++) {
         for (uint8_t j = 0; j <= MAX_X; j++) {
@@ -41,7 +41,7 @@ static void displayWalls(uint8_t walls[MAX_Y][MAX_X]) {
  * @param walls a pointer to an array of walls
  * @param numBullets the length of the bullets array
  */
-void displayGameBoard(Player_t* player, int* bullets[], uint8_t walls[MAX_Y][MAX_X], uint8_t numBullets) {
+void displayGameBoard(Player_t* player, Bullet_t bullets[], uint8_t walls[MAX_Y + 1][MAX_X+ 1], uint8_t numBullets) {
     // Clear the display
     display_clear();
 
@@ -50,7 +50,7 @@ void displayGameBoard(Player_t* player, int* bullets[], uint8_t walls[MAX_Y][MAX
 
     // Display the bullets`
     for (uint8_t i = 0; i < numBullets; i++) {
-        // display_pixel_set(4 - bullets[i]->y, 6 - bullets[i]->x, 1);
+        display_pixel_set(4 - bullets[i].y, 6 - bullets[i].x, 1);
     }
 
     // Display the Walls
