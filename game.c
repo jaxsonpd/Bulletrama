@@ -34,6 +34,15 @@ bool gameOver = false;
 bool won = true;
 bool pause = false;
 
+/** Destroy walls if bullets have hit them
+ * @param walls an array of walls
+ * @param bullets an array of bullets
+ * @param numBullets the number of bullets
+*/
+void destroyWalls(uint8_t walls[MAX_Y + 1][MAX_X + 1], Bullet_t bullets[], uint8_t numBullets) {
+    // Loop through Bullets checking walls
+}
+
 int main(void) {
     // Initialise the controller
     system_init();
@@ -49,6 +58,9 @@ int main(void) {
     Bullet_t bullets[5] = {0};
     uint8_t numBullets = 0;
     
+    uint16_t bulletDelay = 0;
+    uint16_t bulletUpdateDelay = 0;
+
     uint8_t walls[MAX_Y + 1][MAX_X + 1] = {
         {0, 0, 0, 0, 0, 0, 0},
         {1, 1, 1, 1, 1, 1, 1},
@@ -58,7 +70,7 @@ int main(void) {
     };
 
     // Start the main loop
-    while (1) {
+    while (!gameOver) {
         // Pacer Wait
         pacer_wait();
 
@@ -71,17 +83,46 @@ int main(void) {
         // Get new IR info
 
         // Add new bullets from IR and player
+        if (player.hasFired && player.canFire) {
+            // Add new bullet at player postion
+
+            // Reset player 
+            player.hasFired = false;
+            bulletDelay = 0;
+        }
+
+        if (!(player.canFire) && bulletDelay > L1_BULLET_FIRE_DELAY) {
+            player.canFire = true;
+        }
+
+            // Add IR bullets
 
         // Update bullet postion if it is time to
+        if (bulletUpdateDelay > L1_BULLET_UPDATE_WAIT) {
+            // Update bullets
+        }
 
         // Update walls if bullet has hit them
+        destroyWalls(walls, bullets, numBullets);
 
         // Check for health and game over
+            // Check to see if a enemy bullet is on player postion
+
+            // Update player health if so
+
+        if (player.health == 0) {
+            gameOver = true;
+            won = false;
+
+            // tell there board they have won
+        } 
 
         // Update the game board
         displayGameBoard(&player, bullets, walls, numBullets);
+
+        // Update timers
+        bulletDelay += !(player.canFire) ? 1 : 0;
+        bulletUpdateDelay ++;
     }
-
-
 }
 

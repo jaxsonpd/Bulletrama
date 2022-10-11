@@ -9,3 +9,4 @@
 #define L1_START_HEALTH 3
 #define L1_MAX_HEIGHT 3
 #define L1_BULLET_SPEED 1
+#define L1_BULLET_WAIT 100
