@@ -52,11 +52,13 @@ int main(void) {
     bulletConfig(L1_BULLET_SPEED);
     playerConfig(L1_MOVE_SPEED, L1_START_HEALTH, L1_MAX_HEIGHT);
 
-    Bullet_t* bullets[10] = {NULL}
+    Bullet_t bullets[10] = {0};
 
+    for (uint8_t i = 0; i < 10; i ++) {
+        bullets[i] = bulletInit(0, 10, 1);
+    }
     Player_t player = playerInit(0, 0);
 
-    Bullet_t bullets[5] = {0};
     uint8_t numBullets = 10;
     
     uint16_t bulletDelay = 0;
@@ -82,13 +84,15 @@ int main(void) {
         playerUpdate(&player);
 
         // Get new IR info
+        
 
         // Add new bullets from IR and player
         if (player.hasFired && player.canFire) {
             // Add new bullet at player postion
             for (uint8_t i = 0; i < 10; i ++) {
-                if (!(bullets[i])) {
-                    bullets[i] = &bulletInit(player.x, player.y, 1)
+                if (bullets[i].y == 10) {
+                    bullets[i] = bulletInit(player.x, player.y, 1);
+                    break;
                 }
             }
 
@@ -107,7 +111,7 @@ int main(void) {
         if (bulletUpdateDelay > L1_BULLET_UPDATE_WAIT) {
             // Update bullets
             bulletUpdate(bullets);
-
+            bulletUpdateDelay = 0;
             // Send IR if needed
         }
 
@@ -125,6 +129,8 @@ int main(void) {
 
             // tell there board they have won
         } 
+
+        //
         
         // Update the game board
         displayGameBoard(&player, bullets, walls, numBullets);

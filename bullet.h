@@ -41,6 +41,6 @@ Bullet_t bulletInit(uint8_t x, uint8_t y, uint8_t owner);
 /** Update the location of the bullet
  * @param player pointer to a Bullet_t struct
  */
-void bulletUpdate(Bullet_t* bullet[]);
+void bulletUpdate(Bullet_t bullet[]);
 
 #endif

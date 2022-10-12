@@ -21,7 +21,7 @@
  * @param walls a pointer to an array of walls
  * @param numBullets the length of the bullets array
  */
-void displayGameBoard(Player_t* player, Bullet_t* bullets[10], uint8_t walls[MAX_Y + 1][MAX_X+ 1], uint8_t numBullets);
+void displayGameBoard(Player_t* player, Bullet_t bullets[10], uint8_t walls[MAX_Y + 1][MAX_X+ 1], uint8_t numBullets);
 
 /** Initilise the game board
  * 
