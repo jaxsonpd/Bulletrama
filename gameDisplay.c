@@ -41,7 +41,7 @@ static void displayWalls(uint8_t walls[MAX_Y + 1][MAX_X + 1]) {
  * @param walls a pointer to an array of walls
  * @param numBullets the length of the bullets array
  */
-void displayGameBoard(Player_t* player, Bullet_t bullets[], uint8_t walls[MAX_Y + 1][MAX_X+ 1], uint8_t numBullets) {
+void displayGameBoard(Player_t* player, Bullet_t* bullets[10], uint8_t walls[MAX_Y + 1][MAX_X+ 1], uint8_t numBullets) {
     // Clear the display
     display_clear();
 
@@ -50,7 +50,9 @@ void displayGameBoard(Player_t* player, Bullet_t bullets[], uint8_t walls[MAX_Y 
 
     // Display the bullets`
     for (uint8_t i = 0; i < numBullets; i++) {
-        display_pixel_set(4 - bullets[i].y, 6 - bullets[i].x, 1);
+        if (bullets[i]) {
+            display_pixel_set(4 - bullets[i]->y, 6 - bullets[i]->x, 1);
+        }
     }
 
     // Display the Walls
