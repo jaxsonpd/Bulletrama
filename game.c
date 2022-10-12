@@ -28,7 +28,7 @@
 #include "ir_uart.h"
 #include "levels.h"
 
-#define PACER_FREQ 300
+#define PACER_FREQ 200
 
 uint8_t level = 1;
 bool gameOver = false;
@@ -126,11 +126,11 @@ int main(void) {
         }
 
         // Add IR bullets
-        if (ir_uart_read_ready_p) {
-            for (uint8_t i = 0; i < 10; i++) {
-                if (bullets[i].y == 10) {
-                    bullets[i] = bulletInit(('G' - ir_uart_getc()) - 'A', 4, -1);
-                }
+        if (ir_uart_read_ready_p()) {
+            char input = ir_uart_getc();
+
+            if (input >= 'A' && input <= 'G') {
+                bullets[0] = bulletInit(0, 4, -1);
             }
         }
         
@@ -165,10 +165,14 @@ int main(void) {
         for (uint8_t i = 0; i < 10; i++)
         {
             if(bullets[i].y == 5) {
-                bullets[i].y == 10; // Delete
+                bullets[i].y = 10; // Delete
 
                 // Send IR
                 ir_uart_putc('A' + bullets[i].x);
+            }
+
+            if (bullets[i].y == 0) {
+                bullets[i].y = 10;
             }
         }
         
