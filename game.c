@@ -25,6 +25,7 @@
 #include "navswitch.h"
 #include "bullet.h"
 #include "pacer.h"
+#include "ir_uart.h"
 #include "levels.h"
 
 #define PACER_FREQ 300
@@ -50,8 +51,8 @@ void destroyBullet(Bullet_t bullets[10]) {
         {
             if (arrPos != i) {
                 if (bullets[arrPos].x == bullets[i].x  &&  bullets[arrPos].y == bullets[i].y) {
-                    bullets[arrPos].y=0;
-                    bullets[i].y = 0;
+                    bullets[arrPos].y=10;
+                    bullets[i].y = 10;
                 }
             }    
         }
@@ -62,6 +63,7 @@ int main(void) {
     // Initialise the controller
     system_init();
     initGameBoard();
+    ir_uart_init();
     pacer_init(PACER_FREQ);
     
     bulletConfig(L1_BULLET_SPEED);
@@ -70,24 +72,25 @@ int main(void) {
 
     Player_t player = playerInit(0, 0);
 
-    Bullet_t bullets[5] = {0};
-    uint8_t numBullets = 0;
+    Bullet_t bullets[10] = {0};
+
+    for (uint8_t i = 0; i < 10; i++)
+    {
+        bullets[i] = bulletInit(0, 10, 1);
+    }
+    
+    uint8_t numBullets = 10;
     
     uint16_t bulletDelay = 0;
     uint16_t bulletUpdateDelay = 0;
 
     uint8_t walls[MAX_Y + 1][MAX_X + 1] = {
         {0, 0, 0, 0, 0, 0, 0},
-        {1, 1, 1, 1, 1, 1, 1},
-        {0, 0, 1, 1, 1, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0}
     };
-
-   
-
-        
-        
         
     
     // Start the main loop
@@ -106,7 +109,13 @@ int main(void) {
         // Add new bullets from IR and player
         if (player.hasFired && player.canFire) {
             // Add new bullet at player postion
-
+            for (uint8_t i = 0; i < 10; i++) {
+                if(bullets[i].y == 10) {
+                    bullets[i] = bulletInit(player.x, player.y + 1, 1);
+                    break;
+                }
+            }
+            
             // Reset player 
             player.hasFired = false;
             bulletDelay = 0;
@@ -116,18 +125,28 @@ int main(void) {
             player.canFire = true;
         }
 
-            // Add IR bullets
-
+        // Add IR bullets
+        if (ir_uart_read_ready_p) {
+            for (uint8_t i = 0; i < 10; i++) {
+                if (bullets[i].y == 10) {
+                    bullets[i] = bulletInit(('G' - ir_uart_getc()) - 'A', 4, -1);
+                }
+            }
+        }
+        
         // Update bullet postion if it is time to
         if (bulletUpdateDelay > L1_BULLET_UPDATE_WAIT) {
             // Update bullets
+            bulletUpdate(bullets);
+
+            bulletUpdateDelay = 0;
         }
 
         // Update walls if bullet has hit them
         destroyWalls(walls, bullets, numBullets);
 
         // Update bullets if bullet hits bullet
-        destroyBullet(Bullet_t* bullets[10]);
+        destroyBullet(bullets);
         
 
         // Check for health and game over
@@ -141,6 +160,18 @@ int main(void) {
 
             // tell there board they have won
         } 
+
+        // Send IR bullets
+        for (uint8_t i = 0; i < 10; i++)
+        {
+            if(bullets[i].y == 5) {
+                bullets[i].y == 10; // Delete
+
+                // Send IR
+                ir_uart_putc('A' + bullets[i].x);
+            }
+        }
+        
 
         // Update the game board
         displayGameBoard(&player, bullets, walls, numBullets);
