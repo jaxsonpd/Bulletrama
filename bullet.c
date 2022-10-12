@@ -60,4 +60,27 @@ void bulletUpdate(Bullet_t bullet[10])
     }
 }
 
+/** Add a new bullet to the array if possible
+ * 
+ * @param bullets an array of bullets
+ * @param numBullets the number of bullets in the array
+ * @param bullet the bullet to add
+ * 
+ * @return true if bullet added
+ */
+bool bulletAdd(Bullet_t bullets[], uint8_t numBullets, Bullet_t bullet) {
+    uint8_t i = 0;
+    bool found_empty = false;
+
+    while (i < numBullets && !found_empty) {
+        if(bullets[i].y == 10) {
+                bullets[i] = bullet;
+                found_empty = true;
+        }
+        i ++;
+    }
+
+    return found_empty;
+}
+
 

@@ -69,6 +69,49 @@ void destroyBullet(Bullet_t bullets[10], uint8_t numBullets) {
     }
 }
 
+/** Clean up the bullet array sending any that are at the top of the screen.
+ * 
+ * @param bullets an array of bullets
+ * @param numBullets the number of bullets
+ */
+void cleanAndSendBullets(Bullet_t bullets[], uint8_t numBullets) {
+    uint8_t i = 0;
+
+    while (i < numBullets) {
+        if(bullets[i].y == 5) { // Bullet at the top the screen
+            // Send IR postion
+            ir_uart_putc('A' + bullets[i].x);
+        }
+
+        if (bullets[i].y == -1 || bullets[i].y == 5) { // Bullet off screen
+            bullets[i].y = 10; // Delete bullet
+        }
+
+        i ++;
+    }
+}
+
+/** Check to see if the player needs to update health
+ * 
+ * @param player a pointer to a player struct
+ * @param bullets an array of bullets
+ * @param numBullets the number of bullets
+ */
+void updateHealth(Player_t* player, Bullet_t bullets[], uint8_t numBullets) {
+        // Check to see if a enemy bullet is on player postion
+        for (uint8_t i = 0; i < numBullets; i++) {
+            if (bullets[i].y == player->y && bullets[i].x == player->x && bullets[i].owner == -1) {
+                player->health --;
+                bullets[i].y = 10; // Delete bullet
+            }
+        }
+
+        if (player->health == 0) {
+            gameOver = true;
+            won = false;
+        } 
+}
+
 int main(void) {
     // Initialise the controller
     system_init();
@@ -84,12 +127,12 @@ int main(void) {
     Player_t player = playerInit(0, 0);
 
     // Initialise the bullets
-    uint8_t numBullets = 10;
+    uint8_t numBullets = L1_NUMBER_OF_BULLETS;
 
-    Bullet_t bullets[numBullets] = {0};
+    Bullet_t bullets[L1_NUMBER_OF_BULLETS] = {0};
 
-    for (uint8_t i = 0; i < numBullets; i++)
-    {
+    // Populate the bullet array with empty bullets
+    for (uint8_t i = 0; i < numBullets; i++) {
         bullets[i] = bulletInit(0, 10, 1);
     }
     
@@ -130,16 +173,7 @@ int main(void) {
         // Add new bullets from IR and player 
         // Add new bullet at player postion if needed
         if (player.hasFired && player.canFire) {
-            uint8_t i = 0;
-            bool found_empty = false;
-
-            while (i < numBullets && !found_empty) {
-                if(bullets[i].y == 10) {
-                    bullets[i] = bulletInit(player.x, player.y + 1, 1);
-                    found_empty = true;
-                }
-                i ++;
-            }
+            bulletAdd(bullets, numBullets, bulletInit(player.x, player.y + 1, 1));
             
             // Reset player 
             player.hasFired = false;
@@ -148,26 +182,11 @@ int main(void) {
 
         // Add IR bullets
         if (hasInput && input >= 'A' && input <= 'G' ) {
-            bullets[0] = bulletInit(('G' - input) - 'A', 4, -1);
+            bulletAdd(bullets, numBullets, bulletInit(('G' - input) - 'A', 4, -1));
         }
 
         // Send IR bullets and remove bullets that have left the screen
-        uint8_t i = 0;
-
-        while (i < numBullets) {
-            if(bullets[i].y == 5) { // Send bullet
-                bullets[i].y = 10; // Delete bullet
-
-                // Send IR postion
-                ir_uart_putc('A' + bullets[i].x);
-            }
-
-            if (bullets[i].y == -1) { // Bullet off screen
-                bullets[i].y = 10; // Delete bullet
-            }
-
-            i ++;
-        }
+        cleanAndSendBullets(bullets, numBullets);
 
         // Update walls if bullet has hit them
         destroyWalls(walls, bullets, numBullets);
@@ -175,18 +194,20 @@ int main(void) {
         // Update bullets if bullet hits bullet
         destroyBullet(bullets, numBullets);
         
-
         // Check for health and game over
-        // Check to see if a enemy bullet is on player postion
+        updateHealth(&player, bullets, numBullets);
 
-        // Update player health if so
+        // Has the player won
+        if (gameOver && !won) {
+            // tell the other board that they won
+            ir_uart_putc('W');
+        }
 
-        if (player.health == 0) {
+        // Has the player lost
+        if (hasInput && input == 'W') {
             gameOver = true;
-            won = false;
-
-            // tell there board they have won
-        } 
+            won = true;
+        }
         
         // Reset player fire delay if it is time to
         if (!(player.canFire) && bulletDelay > L1_BULLET_FIRE_DELAY) {

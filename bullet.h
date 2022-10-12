@@ -42,4 +42,13 @@ Bullet_t bulletInit(uint8_t x, int8_t y, uint8_t owner);
  */
 void bulletUpdate(Bullet_t bullet[]);
 
+/** Add a new bullet to the array if possible
+ * 
+ * @param bullets an array of bullets
+ * @param numBullets the number of bullets in the array
+ * @param bullet the bullet to add
+ * 
+ * @return true if the bullet was added
+ */
+bool bulletAdd(Bullet_t bullets[], uint8_t numBullets, Bullet_t bullet);
 #endif
