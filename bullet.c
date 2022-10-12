@@ -35,7 +35,7 @@ void bulletConfig(uint8_t Speed) {
  * @return Bullet_t 
  */
 
-Bullet_t bulletInit(uint8_t x, uint8_t y, uint8_t owner) 
+Bullet_t bulletInit(uint8_t x, int8_t y, uint8_t owner) 
 {
     Bullet_t bullet ={
         .owner = owner,
@@ -46,7 +46,10 @@ Bullet_t bulletInit(uint8_t x, uint8_t y, uint8_t owner)
     return bullet;
 }
 
-
+/** Update the location of the bullet
+ * 
+ * @param bullet an array of bullets
+ */
 void bulletUpdate(Bullet_t bullet[10])
 {
     for (uint8_t i = 0; i < 10; i++)

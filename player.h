@@ -13,7 +13,7 @@
 
 typedef struct {
     uint8_t x;
-    uint8_t y;
+    int8_t y;
     uint8_t health;
     bool hasFired;   
     bool canFire; 

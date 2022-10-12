@@ -14,11 +14,10 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-
-
+// Bullet struct
 typedef struct {
     uint8_t x;
-    uint8_t y;
+    int8_t y;
     int8_t owner;
     uint8_t speed;
      
@@ -36,10 +35,10 @@ void bulletConfig(uint8_t speed);
  * @param owner direction of bullet and ownership 0 == enemy
  * @return Bullet_t struct
  */
-Bullet_t bulletInit(uint8_t x, uint8_t y, uint8_t owner);
+Bullet_t bulletInit(uint8_t x, int8_t y, uint8_t owner);
 
 /** Update the location of the bullet
- * @param player pointer to a Bullet_t struct
+ * @param bullet an array of bullets
  */
 void bulletUpdate(Bullet_t bullet[]);
 
