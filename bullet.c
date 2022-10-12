@@ -48,9 +48,16 @@ Bullet_t bulletInit(uint8_t x, uint8_t y, uint8_t owner)
 
 
 
-void bulletUpdate(Bullet_t* bullet)
+void bulletUpdate(Bullet_t* bullet[10])
 {
-    bullet->y += bullet->owner;
+    for (uint8_t i = 0; i < 10; i++)
+    {
+        if (bullet[i]) {
+            bullet[i]->y += bullet[i]->owner;
+        }
+    }
+    
+    
 }
 
 
