@@ -16,7 +16,7 @@ all: game.out
 
 
 # Compile: create object files from C source files.
-game.o: game.c ../../drivers/avr/ir_uart.h ../../drivers/avr/system.h game.h player.h gameDisplay.h bullet.h ../../utils/pacer.h levels.h ../../drivers/navswitch.h
+game.o: game.c ../../drivers/avr/ir_uart.h ../../drivers/button.h ../../drivers/avr/system.h game.h player.h gameDisplay.h bullet.h ../../utils/pacer.h levels.h ../../drivers/navswitch.h ../../utils/tinygl.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 system.o: ../../drivers/avr/system.c ../../drivers/avr/system.h
@@ -31,10 +31,10 @@ navswitch.o: ../../drivers/navswitch.c ../../drivers/avr/delay.h ../../drivers/a
 pio.o: ../../drivers/avr/pio.c ../../drivers/avr/pio.h ../../drivers/avr/system.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-gameDisplay.o: gameDisplay.c gameDisplay.h game.h ../../drivers/display.h bullet.h
+gameDisplay.o: gameDisplay.c gameDisplay.h game.h ../../drivers/display.h bullet.h ../../utils/font.h ../../utils/tinygl.h ../../utils/pacer.h ../../fonts/font5x5_1.h ../../drivers/button.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-display.o: ../../drivers/display.c ../../drivers/avr/system.h ../../drivers/display.h ../../drivers/ledmat.h
+display.o: ../../drivers/display.c ../../drivers/avr/system.h ../../drivers/display.h ../../drivers/ledmat.h 
 	$(CC) -c $(CFLAGS) $< -o $@
 
 ledmat.o: ../../drivers/ledmat.c ../../drivers/avr/pio.h ../../drivers/avr/system.h ../../drivers/ledmat.h
@@ -61,8 +61,17 @@ usart1.o: ../../drivers/avr/usart1.c ../../drivers/avr/system.h ../../drivers/av
 prescale.o: ../../drivers/avr/prescale.c ../../drivers/avr/prescale.h ../../drivers/avr/system.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
+tinygl.o: ../../utils/tinygl.c ../../drivers/avr/system.h ../../drivers/display.h ../../utils/font.h ../../utils/tinygl.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+font.o: ../../utils/font.c ../../drivers/avr/system.h ../../utils/font.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+button.o: ../../drivers/button.c ../../drivers/avr/pio.h ../../drivers/avr/system.h ../../drivers/button.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
 # Link: create ELF output file from object files.
-game.out: game.o system.o player.o navswitch.o pio.o gameDisplay.o display.o ledmat.o bullet.o pacer.o timer.o ir_uart.o usart1.o timer0.o prescale.o
+game.out: game.o system.o player.o navswitch.o pio.o gameDisplay.o display.o ledmat.o bullet.o pacer.o timer.o ir_uart.o usart1.o timer0.o prescale.o tinygl.o font.o button.o
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 

@@ -27,6 +27,8 @@
 #include "pacer.h"
 #include "ir_uart.h"
 #include "levels.h"
+#include "tinygl.h"
+#include "button.h"
 
 #define PACER_FREQ 200
 
@@ -45,8 +47,8 @@ void destroyWalls(uint8_t walls[MAX_Y + 1][MAX_X + 1], Bullet_t bullets[], uint8
     // Loop through Bullets checking walls
     for (uint8_t i = 0; i < numBullets; i++) {
         if (bullets[i].y != 10 && bullets[i].owner == -1) { // Active enemy bullet
-            if (walls[bullets[i].y][bullets[i].x] == 1) { // Only destroy if wall is there
-                walls[bullets[i].y][bullets[i].x] = 0; // Delete wall
+            if (walls[MAX_Y - bullets[i].y][bullets[i].x] == 1) { // Only destroy if wall is there
+                walls[MAX_Y - bullets[i].y][bullets[i].x] = 0; // Delete wall
                 bullets[i].y = 10; // Delete bullet
             }
         }
@@ -115,9 +117,10 @@ void updateHealth(Player_t* player, Bullet_t bullets[], uint8_t numBullets) {
 int main(void) {
     // Initialise the controller
     system_init();
-    initGameBoard();
+    initGameBoard(PACER_FREQ, 20);
     ir_uart_init();
     pacer_init(PACER_FREQ);
+    button_init();
     
     // Configure sprites
     bulletConfig(L1_BULLET_SPEED);
@@ -143,7 +146,7 @@ int main(void) {
     // Initialise the walls
     uint8_t walls[MAX_Y + 1][MAX_X + 1] = {
         {0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0},
+        {1, 1, 1, 1, 1, 1, 1},
         {0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0}
@@ -160,6 +163,9 @@ int main(void) {
 
         //Nav update
         navswitch_update();
+
+        // Button update
+        button_update();
         
         // Player Position update
         playerUpdate(&player);
@@ -182,7 +188,7 @@ int main(void) {
 
         // Add IR bullets
         if (hasInput && input >= 'A' && input <= 'G' ) {
-            bulletAdd(bullets, numBullets, bulletInit(('G' - input) - 'A', 4, -1));
+            bulletAdd(bullets, numBullets, bulletInit('A' - input + 6, 4, -1));
         }
 
         // Send IR bullets and remove bullets that have left the screen
@@ -222,6 +228,16 @@ int main(void) {
             bulletUpdateDelay = 0;
         }
 
+        // Check pause
+        if (button_push_event_p(0)) {
+            ir_uart_putc('P');
+            display_Pause();
+        }
+        
+        if (hasInput && input == 'P') {
+            display_Pause();
+        }
+
         // Update the game board
         displayGameBoard(&player, bullets, walls, numBullets);
 
@@ -229,6 +245,14 @@ int main(void) {
         bulletDelay += !(player.canFire) ? 1 : 0;
         bulletUpdateDelay ++;
         hasInput = false;
+    }
+
+    game_Over();
+
+    if (won) {
+        game_Win();
+    } else {
+        game_Loss();
     }
 }
 

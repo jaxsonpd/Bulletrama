@@ -23,9 +23,21 @@
  */
 void displayGameBoard(Player_t* player, Bullet_t bullets[10], uint8_t walls[MAX_Y + 1][MAX_X+ 1], uint8_t numBullets);
 
-/** Initilise the game board
+/** Initilise the game board 
  * 
+ * @param pacerRate
+ * @param messageRate
  */
-void initGameBoard(void);
+void initGameBoard(uint16_t pacerRate, uint16_t messageRate);
 
+/** Display Game Over
+ * 
+*/
+void game_Over(void);
+
+void game_Win(void);
+
+void game_Loss(void);
+
+void display_Pause(void);
 #endif

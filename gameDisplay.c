@@ -11,14 +11,27 @@
 
 #include "gameDisplay.h"
 #include "display.h"
+#include "button.h"
 #include "game.h"
 #include "bullet.h"
+#include "tinygl.h"
+#include "../fonts/font5x5_1.h"
+#include "pacer.h"
 
 // ==================================================== Function Definitions ====================================================
 /** Initilise the game board 
+ * 
+ * @param pacerRate
+ * @param messageRate
  */
-void initGameBoard(void) {
-    display_init();
+void initGameBoard(uint16_t pacerRate, uint16_t messageRate) {
+    // display_init();
+    tinygl_init (pacerRate);
+    tinygl_font_set (&font5x5_1);
+    tinygl_text_speed_set (messageRate);
+    tinygl_text_mode_set (TINYGL_TEXT_MODE_SCROLL);
+    tinygl_text_dir_set (TINYGL_TEXT_DIR_ROTATE);
+    
 }
 
 /** Display the walls of the game board
@@ -60,4 +73,50 @@ void displayGameBoard(Player_t* player, Bullet_t bullets[10], uint8_t walls[MAX_
 
     // Update the display
     display_update();
+}
+
+
+/** Display Game Over
+ * 
+*/
+
+void game_Over(void) {
+    tinygl_text("GAME OVER");
+    button_update();
+    while (!button_push_event_p (0)) {
+        pacer_wait();
+        tinygl_update();
+        button_update();
+    }
+}
+
+void game_Win(void) {
+    tinygl_text("YOU WIN!");
+    button_update();
+    while (!button_push_event_p (0)) {
+        pacer_wait();
+        button_update();
+        tinygl_update();
+    }
+    
+}
+
+void game_Loss(void) {
+    tinygl_text("YOU LOSER :(");
+    button_update();
+    while (!button_push_event_p (0)) {
+        button_update();
+        pacer_wait();
+        tinygl_update();
+    }
+}
+
+void display_Pause(void) {
+    tinygl_text("PAUSED");
+    button_update();
+    while (!button_push_event_p (0)) {
+        pacer_wait();
+        button_update();
+        tinygl_update();
+    }
 }
