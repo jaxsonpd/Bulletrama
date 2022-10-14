@@ -25,7 +25,7 @@ uint8_t moveSpeed, startHealth, maxMoveHeight;
  * @param startHealth the health the player starts with
  * @param maxMoveHeight the maximum height the player can move to
  */
-void playerConfig(uint8_t newMoveSpeed, uint8_t newStartHealth, uint8_t newMaxMoveHeight) {
+void player_config(uint8_t newMoveSpeed, uint8_t newStartHealth, uint8_t newMaxMoveHeight) {
     moveSpeed = newMoveSpeed;
     startHealth = newStartHealth;
     maxMoveHeight = newMaxMoveHeight;
@@ -36,7 +36,7 @@ void playerConfig(uint8_t newMoveSpeed, uint8_t newStartHealth, uint8_t newMaxMo
  * @param y y position of the player
  * @return Player_t struct
  */
-Player_t playerInit(uint8_t x, uint8_t y) {
+Player_t player_init(uint8_t x, uint8_t y) {
     Player_t player = {
         .x = x,
         .y = y,
@@ -51,7 +51,7 @@ Player_t playerInit(uint8_t x, uint8_t y) {
 /** Check to see if the player needs to be moved
  * @param player pointer to a Player_t struct
  */
-void playerUpdate(Player_t* player) {
+void player_update(Player_t* player) {
     // Check to see if the nav switch has moved
     if (navswitch_push_event_p(UP)) {
         // User is trying to move up

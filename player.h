@@ -26,18 +26,18 @@ typedef struct {
  * @param startHealth the health the player starts with
  * @param maxHeight the maximum height the player can move to
  */
-void playerConfig(uint8_t moveSpeed, uint8_t startHealth, uint8_t maxHeight);
+void player_config(uint8_t moveSpeed, uint8_t startHealth, uint8_t maxHeight);
 
 /** Intialise the player
  * @param x x position of the player
  * @param y y position of the player
  * @return Player_t struct
  */
-Player_t playerInit(uint8_t x, uint8_t y);
+Player_t player_init(uint8_t x, uint8_t y);
 
 /** Check to see if the player needs to be moved
  * @param player pointer to a Player_t struct
  */
-void playerUpdate(Player_t* player);
+void player_update(Player_t* player);
 
 #endif

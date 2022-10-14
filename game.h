@@ -14,8 +14,8 @@
 // Display constants
 #define MAX_X 6
 #define MAX_Y 4
+#define MAX_BULLETS 10
 
-// Game constants
 
 
 

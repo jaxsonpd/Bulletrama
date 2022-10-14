@@ -27,7 +27,7 @@ typedef struct {
 /** Set the Bullet variables
  * @param BulletSpeed the speed the bullet moves at
  */
-void bulletConfig(uint8_t speed);
+void bullet_config(uint8_t speed);
 
 /** Intialise the bullet
  * @param x x position of the bullet
@@ -35,12 +35,12 @@ void bulletConfig(uint8_t speed);
  * @param owner direction of bullet and ownership 0 == enemy
  * @return Bullet_t struct
  */
-Bullet_t bulletInit(uint8_t x, int8_t y, uint8_t owner);
+Bullet_t bullet_init(uint8_t x, int8_t y, uint8_t owner);
 
 /** Update the location of the bullet
  * @param bullet an array of bullets
  */
-void bulletUpdate(Bullet_t bullet[]);
+void bullet_update(Bullet_t bullet[]);
 
 /** Add a new bullet to the array if possible
  * 
@@ -50,5 +50,5 @@ void bulletUpdate(Bullet_t bullet[]);
  * 
  * @return true if the bullet was added
  */
-bool bulletAdd(Bullet_t bullets[], uint8_t numBullets, Bullet_t bullet);
+bool bullet_add(Bullet_t bullets[], uint8_t numBullets, Bullet_t bullet);
 #endif

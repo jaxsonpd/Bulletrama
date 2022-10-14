@@ -21,23 +21,43 @@
  * @param walls a pointer to an array of walls
  * @param numBullets the length of the bullets array
  */
-void displayGameBoard(Player_t* player, Bullet_t bullets[10], uint8_t walls[MAX_Y + 1][MAX_X+ 1], uint8_t numBullets);
+void display_game_board(Player_t* player, Bullet_t bullets[10], uint8_t walls[MAX_Y + 1][MAX_X+ 1], uint8_t numBullets);
 
 /** Initilise the game board 
  * 
  * @param pacerRate
  * @param messageRate
  */
-void initGameBoard(uint16_t pacerRate, uint16_t messageRate);
+void init_game_board(uint16_t pacerRate, uint16_t messageRate);
+
+/** Get the level to be played Next
+ * 
+ * @return uint8_t 
+ */
+uint8_t get_level(void);
+
+/** Display the title screen
+ * 
+ */
+void display_title_screen(void);
 
 /** Display Game Over
  * 
 */
-void game_Over(void);
+void game_over(void);
 
-void game_Win(void);
+/** Display Game Win
+ * 
+ */
+void game_win(void);
 
-void game_Loss(void);
+/** Display Game Loss
+ * 
+ */
+void game_loss(void);
 
-void display_Pause(void);
+/** Display the pause screen
+ * 
+ */
+void display_pause(void);
 #endif

@@ -22,7 +22,7 @@ uint8_t bulletSpeed, friend, enemy;
  * @param enemy val -1 is enemy
  */
 
-void bulletConfig(uint8_t Speed) {
+void bullet_config(uint8_t Speed) {
     bulletSpeed = Speed;
 }
 
@@ -35,7 +35,7 @@ void bulletConfig(uint8_t Speed) {
  * @return Bullet_t 
  */
 
-Bullet_t bulletInit(uint8_t x, int8_t y, uint8_t owner) 
+Bullet_t bullet_init(uint8_t x, int8_t y, uint8_t owner) 
 {
     Bullet_t bullet ={
         .owner = owner,
@@ -50,7 +50,7 @@ Bullet_t bulletInit(uint8_t x, int8_t y, uint8_t owner)
  * 
  * @param bullet an array of bullets
  */
-void bulletUpdate(Bullet_t bullet[10])
+void bullet_update(Bullet_t bullet[10])
 {
     for (uint8_t i = 0; i < 10; i++)
     {
@@ -68,7 +68,7 @@ void bulletUpdate(Bullet_t bullet[10])
  * 
  * @return true if bullet added
  */
-bool bulletAdd(Bullet_t bullets[], uint8_t numBullets, Bullet_t bullet) {
+bool bullet_add(Bullet_t bullets[], uint8_t numBullets, Bullet_t bullet) {
     uint8_t i = 0;
     bool found_empty = false;
 
