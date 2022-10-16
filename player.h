@@ -1,7 +1,7 @@
 /**
 * @file player.h
-* @brief Player movement and health management functions header file
-* @author Jack Duignan (Jdu80), 
+* @brief Player functions header file
+* @author ben gunn (bgu37) jack duignan (jdu80)
 * @date 2020-11-30
 */
 

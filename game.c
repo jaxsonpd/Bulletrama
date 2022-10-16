@@ -1,7 +1,7 @@
 /**
  * @file game.c
  * @brief The main excution file for the game
- * @author Jack Duignan and Ben Gunn.
+ * @author ben gunn (bgu37) jack duignan (jdu80)
  * @date 2022-10-03
  */
 
@@ -26,15 +26,22 @@
 #include "bullet.h"
 #include "pacer.h"
 #include "ir_uart.h"
-#include "levels.h"
 #include "button.h"
 
 // Constants
 #define PACER_FREQ 200
 #define TEXT_SCROLL_RATE 20
 
+// Game Constants
+#define MOVE_SPEED 1
+#define START_HEALTH 3
+#define MAX_HEIGHT 3
+#define BULLET_SPEED 1
+#define NUMBER_OF_BULLETS 10
+#define BULLET_FIRE_DELAY 100
+#define BULLET_UPDATE_WAIT 100
+
 // Global Variables
-uint8_t level = 1;
 bool gameOver = false;
 bool won = true;
 bool pause = false;
@@ -63,7 +70,7 @@ void destroy_walls(uint8_t walls[MAX_Y + 1][MAX_X + 1], Bullet_t bullets[], uint
  * @param numBullets Numbber of bullets possible in array
  */
 void destroy_bullet(Bullet_t bullets[10], uint8_t numBullets) {
-    for (uint8_t arrPos=0; arrPos < numBullets; arrPos++) {
+    for (uint8_t arrPos=0; arrPos < numBullets; arrPos++) { // Compare each bullet against every other bullet
         for (uint8_t i= arrPos; i < numBullets; i++) {
             if (arrPos != i && bullets[arrPos].x == bullets[i].x  &&  bullets[arrPos].y == bullets[i].y) {
                 // Delete the two bullets
@@ -80,9 +87,8 @@ void destroy_bullet(Bullet_t bullets[10], uint8_t numBullets) {
  * @param numBullets the number of bullets
  */
 void clean_and_send_bullets(Bullet_t bullets[], uint8_t numBullets) {
-    uint8_t i = 0;
-
-    while (i < numBullets) {
+    // Loop through bullets
+    for (uint8_t i = 0; i < numBullets; i ++) { 
         if(bullets[i].y == MAX_Y + 1) { // Bullet at the top the screen
             // Send IR postion
             ir_uart_putc('A' + bullets[i].x);
@@ -91,8 +97,6 @@ void clean_and_send_bullets(Bullet_t bullets[], uint8_t numBullets) {
         if (bullets[i].y == -1 || bullets[i].y == MAX_Y + 1) { // Bullet off screen
             bullets[i].y = 10; // Delete bullet
         }
-
-        i ++;
     }
 }
 
@@ -118,18 +122,12 @@ void update_health(Player_t* player, Bullet_t bullets[], uint8_t numBullets) {
         } 
 }
 
-/** Initialise the game for level 1
- * 
- */
-
-void level_1_init(void) {
-    // Configure items
-    bullet_config(L1_BULLET_SPEED);
-    player_config(L1_MOVE_SPEED, L1_START_HEALTH, L1_MAX_HEIGHT);
-}
-
 /** Play the game
  * 
+ * @param player The player struct
+ * @param walls the Array of walls
+ * @param bullets the array of bullets
+ * @param numBullets number of bullets in the bullets array
  */
 void play_game(Player_t player, uint8_t walls[MAX_Y + 1][MAX_X + 1], Bullet_t bullets[], uint8_t numBullets) {
      // Tracking variables
@@ -137,7 +135,7 @@ void play_game(Player_t player, uint8_t walls[MAX_Y + 1][MAX_X + 1], Bullet_t bu
     char input = 0;
 
     // Initialise the timer variables
-    uint16_t bulletDelay = 0;
+    uint16_t firingDelay= 0;
     uint16_t bulletUpdateDelay = 0;
 
     // Start the main loop
@@ -160,14 +158,13 @@ void play_game(Player_t player, uint8_t walls[MAX_Y + 1][MAX_X + 1], Bullet_t bu
             hasInput = true;
         }
 
-        // Add new bullets from IR and player 
         // Add new bullet at player postion if needed
         if (player.hasFired && player.canFire) {
             bullet_add(bullets, numBullets, bullet_init(player.x, player.y + 1, 1));
             
-            // Reset player 
+            // Reset player fire timers
             player.hasFired = false;
-            bulletDelay = 0;
+            firingDelay = 0;
         }
 
         // Add IR bullets
@@ -187,37 +184,36 @@ void play_game(Player_t player, uint8_t walls[MAX_Y + 1][MAX_X + 1], Bullet_t bu
         // Check for health and game over
         update_health(&player, bullets, numBullets);
 
-        // Has the player won
-        if (gameOver && !won) {
+        // Has the player lost
+        if (gameOver) {
             // tell the other board that they won
             ir_uart_putc('W');
         }
 
-        // Has the player lost
+        // Has the player won
         if (hasInput && input == 'W') {
             gameOver = true;
             won = true;
         }
         
         // Reset player fire delay if it is time to
-        if (!(player.canFire) && bulletDelay > L1_BULLET_FIRE_DELAY) {
+        if (!(player.canFire) && firingDelay> BULLET_FIRE_DELAY) {
             player.canFire = true;
         }
 
         // Update bullet postion if it is time to
-        if (bulletUpdateDelay > L1_BULLET_UPDATE_WAIT) {
+        if (bulletUpdateDelay > BULLET_UPDATE_WAIT) {
             // Update bullets
             bullet_update(bullets);
             bulletUpdateDelay = 0;
         }
 
-        // Check pause
-        if (button_push_event_p(0)) {
-            ir_uart_putc('P');
-            display_pause();
-        }
-        
-        if (hasInput && input == 'P') {
+        // Check pause state
+        if (button_push_event_p(0) || (hasInput && input == 'P')) {
+            if (!hasInput) {
+                ir_uart_putc('P'); // This player triggered the pause so tell other board
+            }
+
             display_pause();
         }
 
@@ -225,7 +221,7 @@ void play_game(Player_t player, uint8_t walls[MAX_Y + 1][MAX_X + 1], Bullet_t bu
         display_game_board(&player, bullets, walls, numBullets);
 
         // Update timers
-        bulletDelay += !(player.canFire) ? 1 : 0;
+        firingDelay+= !(player.canFire) ? 1 : 0;
         bulletUpdateDelay ++;
         hasInput = false;
     }
@@ -239,25 +235,22 @@ int main(void) {
     pacer_init(PACER_FREQ);
     button_init();
     
+    // Configure game objects
+    bullet_config(BULLET_SPEED);
+    player_config(MOVE_SPEED, START_HEALTH, MAX_HEIGHT);
+
+    // Start the game
+    display_title_screen();
+
     while (1) {
-        // Initialise the walls as an empty array
-        uint8_t walls[MAX_Y + 1][MAX_X + 1];
-        
-        // Get the level
-        level = get_level();
-
-        // Initialise the level
-        if (level == 1) {
-            level_1_init();
-
-            uint8_t walls[MAX_Y + 1][MAX_X + 1] = {
-                {0, 0, 0, 0, 0, 0, 0},
-                {1, 1, 1, 1, 1, 1, 1},
-                {0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0}
-            };
-        }
+        // Initialise and clear the walls
+        uint8_t walls[MAX_Y + 1][MAX_X + 1] = {
+            {0, 0, 0, 0, 0, 0, 0},
+            {1, 1, 1, 1, 1, 1, 1},
+            {0, 0, 1, 1, 1, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0}
+        };
 
         // Clear game objects
         // Initialise the player
@@ -265,12 +258,11 @@ int main(void) {
 
         // Initialise the bullets
         uint8_t numBullets = MAX_BULLETS;
-
         Bullet_t bullets[MAX_BULLETS];
 
         // Populate the bullet array with empty bullets
         for (uint8_t i = 0; i < numBullets; i++) {
-            bullets[i] = bullet_init(0, 10, 1);
+            bullets[i] = bullet_init(0, 10, 1); // Non played bullet
         }
 
         // Play the level
@@ -285,13 +277,9 @@ int main(void) {
             game_loss();
         }
 
-        // Reset the golbal variables
+        // Reset the global variables
         gameOver = false;
         won = true;
     }
-    
-    
-
-    
 }
 

@@ -1,6 +1,6 @@
 /**
  * @file game.h
- * @author jack Duignan (Jdu80)
+ * @author ben gunn (bgu37) jack duignan (jdu80)
  * @brief This file contains the main constants and functions for the game.
  * @date 2022-10-06
  * 

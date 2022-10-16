@@ -30,12 +30,6 @@ void display_game_board(Player_t* player, Bullet_t bullets[10], uint8_t walls[MA
  */
 void init_game_board(uint16_t pacerRate, uint16_t messageRate);
 
-/** Get the level to be played Next
- * 
- * @return uint8_t 
- */
-uint8_t get_level(void);
-
 /** Display the title screen
  * 
  */

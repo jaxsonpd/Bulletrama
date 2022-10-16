@@ -1,5 +1,5 @@
 # File:   Makefile
-# Author: Jack Duignan
+# Author: Jack Duignan (jdu80)
 # Date:   10 Oct 2022
 # Descr:  Makefile for game
 
@@ -16,7 +16,7 @@ all: game.out
 
 
 # Compile: create object files from C source files.
-game.o: game.c ../../drivers/avr/ir_uart.h ../../drivers/button.h ../../drivers/avr/system.h game.h player.h gameDisplay.h bullet.h ../../utils/pacer.h levels.h ../../drivers/navswitch.h ../../utils/tinygl.h
+game.o: game.c ../../drivers/avr/ir_uart.h ../../drivers/button.h ../../drivers/avr/system.h game.h player.h gameDisplay.h bullet.h ../../utils/pacer.h ../../drivers/navswitch.h ../../utils/tinygl.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 system.o: ../../drivers/avr/system.c ../../drivers/avr/system.h

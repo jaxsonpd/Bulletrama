@@ -1,7 +1,7 @@
 /**
  * @file player.c
- * @author Jack Duignan
- * @brief Player movement and health management functions
+ * @author ben gunn (bgu37) jack duignan (jdu80)
+ * @brief Player functionality declarations 
  * @date 2022-10-02
  */
 

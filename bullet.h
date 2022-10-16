@@ -1,10 +1,8 @@
 /**
  * @file bullet.h
- * @author ben gunn (bgu37)
- * @brief contains the structs for bullet position, speed and owner
+ * @author ben gunn (bgu37) jack duignan (jdu80)
+ * @brief header file for the bullet functionality
  * @date 2022-10-10
- * 
- * @copyright Copyright (c) 2022
  * 
  */
 
@@ -33,12 +31,14 @@ void bullet_config(uint8_t speed);
  * @param x x position of the bullet
  * @param y y position of the bullet
  * @param owner direction of bullet and ownership 0 == enemy
+ * 
  * @return Bullet_t struct
  */
 Bullet_t bullet_init(uint8_t x, int8_t y, uint8_t owner);
 
 /** Update the location of the bullet
  * @param bullet an array of bullets
+ * 
  */
 void bullet_update(Bullet_t bullet[]);
 

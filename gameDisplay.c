@@ -1,11 +1,8 @@
 /**
  * @file gameDisplay.c
- * @author Jack Duignan
+ * @author ben gunn (bgu37) jack duignan (jdu80)
  * @brief Functions for displaying the game board
- * @version 0.1
  * @date 2022-10-06
- * 
- * @copyright Copyright (c) 2022
  * 
  */
 
@@ -75,21 +72,27 @@ void display_game_board(Player_t* player, Bullet_t bullets[10], uint8_t walls[MA
     display_update();
 }
 
-/** Get the next level to be played
+/**
+ * Display the title screen
  * 
- * @return uint8_t the level to be played next 
- */
-uint8_t get_level(void) {
-    return 1;
-}
+*/
+void display_title_screen(void) {
+    tinygl_text("Bulletrama!");
+    button_update();
 
+    while (!button_push_event_p (0)) { // Display until the button is pressed
+        pacer_wait();
+        tinygl_update();
+        button_update();
+    }
+}
 /** Display Game Over
  * 
 */
 void game_over(void) {
     tinygl_text("GAME OVER");
     button_update();
-    while (!button_push_event_p (0)) {
+    while (!button_push_event_p (0)) { // Display until the button is pressed
         pacer_wait();
         tinygl_update();
         button_update();
@@ -102,7 +105,7 @@ void game_over(void) {
 void game_win(void) {
     tinygl_text("YOU WIN!");
     button_update();
-    while (!button_push_event_p (0)) {
+    while (!button_push_event_p (0)) { // Display until the button is pressed
         pacer_wait();
         button_update();
         tinygl_update();
@@ -116,7 +119,7 @@ void game_win(void) {
 void game_loss(void) {
     tinygl_text("YOU LOSER :(");
     button_update();
-    while (!button_push_event_p (0)) {
+    while (!button_push_event_p (0)) { // Display until the button is pressed
         button_update();
         pacer_wait();
         tinygl_update();
@@ -129,7 +132,7 @@ void game_loss(void) {
 void display_pause(void) {
     tinygl_text("PAUSED");
     button_update();
-    while (!button_push_event_p (0)) {
+    while (!button_push_event_p (0)) { // Display until the button is pressed
         pacer_wait();
         button_update();
         tinygl_update();

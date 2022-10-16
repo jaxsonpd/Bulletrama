@@ -1,6 +1,6 @@
 /**
  * @file bullet.c
- * @author ben gunn (bgu37)
+ * @author ben gunn (bgu37) jack duignan (jdu80)
  * @brief bullet movement location and ownership
  * @date 2022-10-10
  * 
