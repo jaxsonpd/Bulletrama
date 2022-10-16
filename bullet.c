@@ -1,7 +1,7 @@
 /**
  * @file bullet.c
  * @author ben gunn (bgu37) jack duignan (jdu80)
- * @brief bullet movement location and ownership
+ * @brief bullet initialisation movement location and ownership
  * @date 2022-10-10
  * 
  * @copyright Copyright (c) 2022
@@ -9,32 +9,26 @@
  */
 
 #include "bullet.h"
-
 #include "game.h"
 
 // Global variables
 uint8_t bulletSpeed, friend, enemy;
 
 // ==================================================== Function Definitions ====================================================
-/** Set the player variables
+/** Set the bullet variables
  * @param bulletSpeed the speed the bullet moves at
- * @param friend val 1 is my bullet
- * @param enemy val -1 is enemy
  */
-
 void bullet_config(uint8_t Speed) {
     bulletSpeed = Speed;
 }
 
-/**
- * @brief declare the origin and bullet direction
+/** A bullet is had been fired. Declare the origin and bullet direction
  * 
  * @param x 
  * @param y 
  * @param owner takes +1==friend  -1== enemy
  * @return Bullet_t 
  */
-
 Bullet_t bullet_init(uint8_t x, int8_t y, uint8_t owner) 
 {
     Bullet_t bullet ={
@@ -46,9 +40,9 @@ Bullet_t bullet_init(uint8_t x, int8_t y, uint8_t owner)
     return bullet;
 }
 
-/** Update the location of the bullet
+/** Update the location of the bullet by advancing in y direction. direction depends on ownership
  * 
- * @param bullet an array of bullets
+ * @param bullet an array of bullets of bullet_t type
  */
 void bullet_update(Bullet_t bullet[10])
 {
@@ -65,7 +59,6 @@ void bullet_update(Bullet_t bullet[10])
  * @param bullets an array of bullets
  * @param numBullets the number of bullets in the array
  * @param bullet the bullet to add
- * 
  * @return true if bullet added
  */
 bool bullet_add(Bullet_t bullets[], uint8_t numBullets, Bullet_t bullet) {

@@ -29,16 +29,16 @@
 #include "button.h"
 
 // Constants
-#define PACER_FREQ 200
+#define PACER_FREQ 400
 #define TEXT_SCROLL_RATE 20
 
 // Game Constants
-#define MOVE_SPEED 1
+#define MOVE_SPEED 2
 #define START_HEALTH 3
 #define MAX_HEIGHT 3
 #define BULLET_SPEED 1
 #define NUMBER_OF_BULLETS 10
-#define BULLET_FIRE_DELAY 100
+#define BULLET_FIRE_DELAY 10
 #define BULLET_UPDATE_WAIT 100
 
 // Global Variables
