@@ -19,24 +19,30 @@
 // Global variables
 uint8_t moveSpeed, startHealth, maxMoveHeight; 
 
-// ==================================================== Function Definitions ====================================================
-/** Set the player variables
+/**
+ * @brief Set the player variables
+ * 
  * @param moveSpeed the speed the player moves at
  * @param startHealth the health the player starts with
  * @param maxMoveHeight the maximum height the player can move to
  */
-void player_config(uint8_t newMoveSpeed, uint8_t newStartHealth, uint8_t newMaxMoveHeight) {
+void player_config(uint8_t newMoveSpeed, uint8_t newStartHealth, uint8_t newMaxMoveHeight) 
+{
     moveSpeed = newMoveSpeed;
     startHealth = newStartHealth;
     maxMoveHeight = newMaxMoveHeight;
 }
 
-/** Intialise the player
+/**
+ * @brief Intialise the player
+ * 
  * @param x x position of the player
  * @param y y position of the player
+ *
  * @return Player_t struct
  */
-Player_t player_init(uint8_t x, uint8_t y) {
+Player_t player_init(uint8_t x, uint8_t y) 
+{
     Player_t player = {
         .x = x,
         .y = y,
@@ -48,10 +54,13 @@ Player_t player_init(uint8_t x, uint8_t y) {
     return player;
 }
 
-/** Check to see if the player needs to be moved
+/**
+ * @brief Check to see if the player needs to be moved
+ * 
  * @param player pointer to a Player_t struct
  */
-void player_update(Player_t* player) {
+void player_update(Player_t* player) 
+{
     // Check to see if the nav switch has moved
     if (navswitch_push_event_p(UP)) {
         // User is trying to move up

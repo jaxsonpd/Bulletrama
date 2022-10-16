@@ -4,8 +4,6 @@
  * @brief bullet initialisation movement location and ownership
  * @date 2022-10-10
  * 
- * @copyright Copyright (c) 2022
- * 
  */
 
 #include "bullet.h"
@@ -14,15 +12,18 @@
 // Global variables
 uint8_t bulletSpeed, friend, enemy;
 
-// ==================================================== Function Definitions ====================================================
-/** Set the bullet variables
+/**
+ * @brief Set the bullet configuration variables
+ * 
  * @param bulletSpeed the speed the bullet moves at
  */
-void bullet_config(uint8_t Speed) {
+void bullet_config(uint8_t Speed) 
+{
     bulletSpeed = Speed;
 }
 
-/** A bullet is had been fired. Declare the origin and bullet direction
+/**
+ * @brief A bullet is had been fired. Declare the origin and bullet direction
  * 
  * @param x 
  * @param y 
@@ -40,7 +41,8 @@ Bullet_t bullet_init(uint8_t x, int8_t y, uint8_t owner)
     return bullet;
 }
 
-/** Update the location of the bullet by advancing in y direction. direction depends on ownership
+/** 
+ * @brief Update the location of the bullet by advancing in y direction. direction depends on ownership
  * 
  * @param bullet an array of bullets of bullet_t type
  */
@@ -54,7 +56,8 @@ void bullet_update(Bullet_t bullet[10])
     }
 }
 
-/** Add a new bullet to the array if possible
+/**
+ * @brief Add a new bullet to the array if possible
  * 
  * @param bullets an array of bullets
  * @param numBullets the number of bullets in the array

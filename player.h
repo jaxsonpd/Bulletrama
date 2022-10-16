@@ -19,23 +19,27 @@ typedef struct {
     bool canFire; 
 } Player_t;
 
-
-
-/** Set the player variables
+/**
+ * @brief Set the player variables
+ * 
  * @param moveSpeed the speed the player moves at
  * @param startHealth the health the player starts with
  * @param maxHeight the maximum height the player can move to
  */
 void player_config(uint8_t moveSpeed, uint8_t startHealth, uint8_t maxHeight);
 
-/** Intialise the player
+/**
+ * @brief Intialise the player
+ * 
  * @param x x position of the player
  * @param y y position of the player
+ *
  * @return Player_t struct
  */
 Player_t player_init(uint8_t x, uint8_t y);
 
-/** Check to see if the player needs to be moved
+/**
+ * @brief Check to see if the player needs to be moved
  * @param player pointer to a Player_t struct
  */
 void player_update(Player_t* player);

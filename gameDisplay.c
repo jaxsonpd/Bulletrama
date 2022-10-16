@@ -15,13 +15,14 @@
 #include "../fonts/font5x5_1.h"
 #include "pacer.h"
 
-// ==================================================== Function Definitions ====================================================
-/** Initilise the game board 
+/**
+ * @brief Initilise the game board 
  * 
  * @param pacerRate
  * @param messageRate
  */
-void init_game_board(uint16_t pacerRate, uint16_t messageRate) {
+void init_game_board(uint16_t pacerRate, uint16_t messageRate) 
+{
     // display_init();
     tinygl_init (pacerRate);
     tinygl_font_set (&font5x5_1);
@@ -31,10 +32,13 @@ void init_game_board(uint16_t pacerRate, uint16_t messageRate) {
     
 }
 
-/** Display the walls of the game board
+/**
+ * @brief Display the walls of the game board
+ *
  * @param walls pointer to a 2D array of walls
  */
-static void display_walls(uint8_t walls[MAX_Y + 1][MAX_X + 1]) {
+static void display_walls(uint8_t walls[MAX_Y + 1][MAX_X + 1]) 
+{
     // Display the walls
     for (uint8_t i = 0; i < MAX_Y; i++) {
         for (uint8_t j = 0; j <= MAX_X; j++) {
@@ -45,13 +49,16 @@ static void display_walls(uint8_t walls[MAX_Y + 1][MAX_X + 1]) {
     }
 }
 
-/** Display the game board
+/**
+ * @brief Display the game board
+ * 
  * @param player a pointer to the player struct
  * @param bullets a pointer to an array of pointers to bullet structs 
  * @param walls a pointer to an array of walls
  * @param numBullets the length of the bullets array
  */
-void display_game_board(Player_t* player, Bullet_t bullets[10], uint8_t walls[MAX_Y + 1][MAX_X+ 1], uint8_t numBullets) {
+void display_game_board(Player_t* player, Bullet_t bullets[10], uint8_t walls[MAX_Y + 1][MAX_X+ 1], uint8_t numBullets) 
+{
     // Clear the display
     display_clear();
 
@@ -73,10 +80,11 @@ void display_game_board(Player_t* player, Bullet_t bullets[10], uint8_t walls[MA
 }
 
 /**
- * Display the title screen
+ * @brief Display the title screen
  * 
 */
-void display_title_screen(void) {
+void display_title_screen(void) 
+{
     tinygl_text("Bulletrama!");
     button_update();
 
@@ -86,10 +94,12 @@ void display_title_screen(void) {
         button_update();
     }
 }
-/** Display Game Over
+/**
+ * @brief Display Game Over
  * 
 */
-void game_over(void) {
+void game_over(void) 
+{
     tinygl_text("GAME OVER");
     button_update();
     while (!button_push_event_p (0)) { // Display until the button is pressed
@@ -99,10 +109,12 @@ void game_over(void) {
     }
 }
 
-/** Display Game Win
+/**
+ * @brief Display Game Win
  * 
  */
-void game_win(void) {
+void game_win(void) 
+{
     tinygl_text("YOU WIN!");
     button_update();
     while (!button_push_event_p (0)) { // Display until the button is pressed
@@ -113,10 +125,12 @@ void game_win(void) {
     
 }
 
-/** Display Game Loss
+/**
+ * @brief Display Game Loss
  * 
  */
-void game_loss(void) {
+void game_loss(void) 
+{
     tinygl_text("YOU LOSER :(");
     button_update();
     while (!button_push_event_p (0)) { // Display until the button is pressed
@@ -126,10 +140,12 @@ void game_loss(void) {
     }
 }
 
-/** Display the pause screen
+/** 
+ * @brief Display the pause screen
  * 
  */
-void display_pause(void) {
+void display_pause(void) 
+{
     tinygl_text("PAUSED");
     button_update();
     while (!button_push_event_p (0)) { // Display until the button is pressed

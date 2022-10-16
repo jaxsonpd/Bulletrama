@@ -28,7 +28,7 @@
 #include "ir_uart.h"
 #include "button.h"
 
-// Constants
+// Sytem Constants
 #define PACER_FREQ 400
 #define TEXT_SCROLL_RATE 20
 
@@ -46,13 +46,15 @@ bool gameOver = false;
 bool won = true;
 bool pause = false;
 
-/** Destroy walls if bullets have hit them
+/** 
+ * @brief Destroy walls if bullets have hit them
  * 
  * @param walls an array of walls
  * @param bullets an array of bullets
  * @param numBullets the number of bullets
 */
-void destroy_walls(uint8_t walls[MAX_Y + 1][MAX_X + 1], Bullet_t bullets[], uint8_t numBullets) {
+void destroy_walls(uint8_t walls[MAX_Y + 1][MAX_X + 1], Bullet_t bullets[], uint8_t numBullets) 
+{
     // Loop through Bullets checking walls
     for (uint8_t i = 0; i < numBullets; i++) {
         if (bullets[i].y != 10 && bullets[i].owner == -1) { // Active enemy bullet
@@ -64,12 +66,14 @@ void destroy_walls(uint8_t walls[MAX_Y + 1][MAX_X + 1], Bullet_t bullets[], uint
     }
 }
 
-/** Destroy bullets if they hit each other
+/** 
+ * @breif Destroy bullets if they hit each other
  * 
  * @param bullets array of bullets
  * @param numBullets Numbber of bullets possible in array
  */
-void destroy_bullet(Bullet_t bullets[10], uint8_t numBullets) {
+void destroy_bullet(Bullet_t bullets[10], uint8_t numBullets) 
+{
     for (uint8_t arrPos=0; arrPos < numBullets; arrPos++) { // Compare each bullet against every other bullet
         for (uint8_t i= arrPos; i < numBullets; i++) {
             if (arrPos != i && bullets[arrPos].x == bullets[i].x  &&  bullets[arrPos].y == bullets[i].y) {
@@ -81,12 +85,14 @@ void destroy_bullet(Bullet_t bullets[10], uint8_t numBullets) {
     }
 }
 
-/** Clean up the bullet array sending any that are at the top of the screen.
+/** 
+ * @brief Clean up the bullet array, sending any that are at the top of the screen.
  * 
  * @param bullets an array of bullets
  * @param numBullets the number of bullets
  */
-void clean_and_send_bullets(Bullet_t bullets[], uint8_t numBullets) {
+void clean_and_send_bullets(Bullet_t bullets[], uint8_t numBullets) 
+{
     // Loop through bullets
     for (uint8_t i = 0; i < numBullets; i ++) { 
         if(bullets[i].y == MAX_Y + 1) { // Bullet at the top the screen
@@ -100,13 +106,15 @@ void clean_and_send_bullets(Bullet_t bullets[], uint8_t numBullets) {
     }
 }
 
-/** Check to see if the player needs to update health
+/** 
+ * @brief Check to see if the player needs to update health
  * 
  * @param player a pointer to a player struct
  * @param bullets an array of bullets
  * @param numBullets the number of bullets
  */
-void update_health(Player_t* player, Bullet_t bullets[], uint8_t numBullets) {
+void update_health(Player_t* player, Bullet_t bullets[], uint8_t numBullets) 
+{
         // Check to see if a enemy bullet is on player postion
         for (uint8_t i = 0; i < numBullets; i++) {
             if (bullets[i].y == player->y && bullets[i].x == player->x && bullets[i].owner == -1) {
@@ -122,14 +130,16 @@ void update_health(Player_t* player, Bullet_t bullets[], uint8_t numBullets) {
         } 
 }
 
-/** Play the game
+/**
+ * @brief Run the main game loop until a round is finished
  * 
  * @param player The player struct
  * @param walls the Array of walls
  * @param bullets the array of bullets
  * @param numBullets number of bullets in the bullets array
  */
-void play_game(Player_t player, uint8_t walls[MAX_Y + 1][MAX_X + 1], Bullet_t bullets[], uint8_t numBullets) {
+void play_game(Player_t player, uint8_t walls[MAX_Y + 1][MAX_X + 1], Bullet_t bullets[], uint8_t numBullets) 
+{
      // Tracking variables
     bool hasInput = false;
     char input = 0;
@@ -227,7 +237,8 @@ void play_game(Player_t player, uint8_t walls[MAX_Y + 1][MAX_X + 1], Bullet_t bu
     }
 }
 
-int main(void) {
+int main(void) 
+{
     // Initialise the controller
     system_init();
     init_game_board(PACER_FREQ, TEXT_SCROLL_RATE);

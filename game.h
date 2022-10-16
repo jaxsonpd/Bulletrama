@@ -11,7 +11,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-// Display constants
+// General game constants
 #define MAX_X 6
 #define MAX_Y 4
 #define MAX_BULLETS 10
