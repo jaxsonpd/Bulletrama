@@ -33,13 +33,13 @@
 #define TEXT_SCROLL_RATE 20
 
 // Game Constants
-#define MOVE_SPEED 2
+#define MOVE_SPEED 1
 #define START_HEALTH 3
 #define MAX_HEIGHT 3
 #define BULLET_SPEED 1
 #define NUMBER_OF_BULLETS 10
-#define BULLET_FIRE_DELAY 10
-#define BULLET_UPDATE_WAIT 100
+#define BULLET_FIRE_DELAY 150
+#define BULLET_UPDATE_WAIT 75
 
 // Global Variables
 bool gameOver = false;
@@ -76,11 +76,13 @@ void destroy_bullet(Bullet_t bullets[10], uint8_t numBullets)
 {
     for (uint8_t arrPos=0; arrPos < numBullets; arrPos++) { // Compare each bullet against every other bullet
         for (uint8_t i= arrPos; i < numBullets; i++) {
-            if (arrPos != i && bullets[arrPos].x == bullets[i].x  &&  bullets[arrPos].y == bullets[i].y) {
-                // Delete the two bullets
-                bullets[arrPos].y = 10;
-                bullets[i].y = 10;
-            }    
+            if (arrPos != i && (bullets[arrPos].x == bullets[i].x)) { // in the same column
+                if (bullets[arrPos].y == bullets[i].y || bullets[arrPos].y == (bullets[i].y - 1)) { // Next to or ontop of each other
+                    // Delete the two bullets
+                    bullets[arrPos].y = 10;
+                    bullets[i].y = 10;
+                }
+            }   
         }
     }
 }

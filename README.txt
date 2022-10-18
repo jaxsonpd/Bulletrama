@@ -36,6 +36,9 @@ Aim:
 
 Hints:
 - Try to keep an eye on your opponent as you move about the board firing at them by pushing down on the joy stick.
-- Either dodge their bullets by moving the nav switch or distroy them by shooting them out of the sky. Start by distroying their protective wall (your bullets pass through your own).
+- Either dodge their bullets by moving the joy stick or distroy them by shooting them out of the sky. Start by distroying 
+  their protective wall (your bullets pass through your own).
 - Use the skip text button to move passed any text screen when ready.
-- While in the game itself use the pause button to pause the game this will pause the game for the other player aswell. Use the pause button again to return to normal play. This will only un pause your player you will be unable to damage the other player until they have unpaused also.  
+- While in the game itself use the pause button to pause the game this will pause the game for the other player aswell. 
+  Use the pause button again to return to normal play. This will only un pause your player you will be unable to damage the 
+  other player until they have unpaused also.  
