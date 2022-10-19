@@ -2,7 +2,7 @@ This repository contains the game developed for the ENCE260 Assingment 02 in Sem
 
 Group Members:
 Jack Duignan (jdu80)
-Ben Gunn
+Ben Gunn (bgu37)
 
 Group Number: 304
 
@@ -19,7 +19,7 @@ ______       _ _      _
 This is a two player game requiring ir line of sight between funkits orientate as in the figure below.
 
 .-----------------------------------^-----------.
-|        [||] pause/skip text      /|\          |
+|      [||] pause/skip text/start  /|\          |
 |                                   |           |
 |  O O O O O O O                    |           |
 |  O           O                   aim          |
@@ -37,8 +37,9 @@ Aim:
 Hints:
 - Try to keep an eye on your opponent as you move about the board firing at them by pushing down on the joy stick.
 - Either dodge their bullets by moving the joy stick or distroy them by shooting them out of the sky. Start by distroying 
-  their protective wall (your bullets pass through your own).
+  their protective wall at the top of their screen (your bullets pass through your own).
 - Use the skip text button to move passed any text screen when ready.
-- While in the game itself use the pause button to pause the game this will pause the game for the other player aswell. 
-  Use the pause button again to return to normal play. This will only un pause your player you will be unable to damage the 
+- While in the game itself use the pause button to pause the game. This will pause the game for the other player aswell. 
+  Use the pause button again to return to normal play. This will only un-pause your player, you will be unable to damage the 
   other player until they have unpaused also.  
+- Bullets can only be shot every half a second so don't spam the trigger.

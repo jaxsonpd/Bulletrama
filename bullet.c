@@ -10,7 +10,7 @@
 #include "game.h"
 
 // Global variables
-uint8_t bulletSpeed, friend, enemy;
+static uint8_t bulletSpeed;
 
 /**
  * @brief Set the bullet configuration variables
@@ -48,9 +48,8 @@ Bullet_t bullet_init(uint8_t x, int8_t y, uint8_t owner)
  */
 void bullet_update(Bullet_t bullet[10])
 {
-    for (uint8_t i = 0; i < 10; i++)
-    {
-        if (bullet[i].y != 10) {
+    for (uint8_t i = 0; i < 10; i++) {
+        if (bullet[i].y != 10) { // If not deleted
             bullet[i].y += bullet[i].owner;
         }
     }
@@ -62,6 +61,7 @@ void bullet_update(Bullet_t bullet[10])
  * @param bullets an array of bullets
  * @param numBullets the number of bullets in the array
  * @param bullet the bullet to add
+ * s
  * @return true if bullet added
  */
 bool bullet_add(Bullet_t bullets[], uint8_t numBullets, Bullet_t bullet) {

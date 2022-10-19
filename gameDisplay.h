@@ -1,6 +1,6 @@
 /**
  * @file gameDisplay.h
- * @author Jack Duignan (Jdu80)
+ * @author ben gunn (bgu37) jack duignan (jdu80)
  * @brief Header file for the functions that display the game board
  * @date 2022-10-06
  * 

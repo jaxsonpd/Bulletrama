@@ -16,6 +16,9 @@
  * 7. check for game over
  * 6. update the screen
  * 7. repeat
+ * 
+ * Notes:
+ * A bullet y value of 10 is a deleted bullet not in use
  */
 
 #include "player.h"
@@ -98,8 +101,7 @@ void clean_and_send_bullets(Bullet_t bullets[], uint8_t numBullets)
     // Loop through bullets
     for (uint8_t i = 0; i < numBullets; i ++) { 
         if(bullets[i].y == MAX_Y + 1) { // Bullet at the top the screen
-            // Send IR postion
-            ir_uart_putc('A' + bullets[i].x);
+            ir_uart_putc('A' + bullets[i].x); // Send postion over IR
         }
 
         if (bullets[i].y == -1 || bullets[i].y == MAX_Y + 1) { // Bullet off screen

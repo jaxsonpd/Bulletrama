@@ -1,5 +1,5 @@
 # File:   Makefile
-# Author: Jack Duignan (jdu80)
+# Author: ben gunn (bgu37) jack duignan (jdu80)
 # Date:   10 Oct 2022
 # Descr:  Makefile for game
 

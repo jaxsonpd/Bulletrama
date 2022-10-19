@@ -17,7 +17,7 @@
 #define FIRE NAVSWITCH_PUSH
 
 // Global variables
-uint8_t moveSpeed, startHealth, maxMoveHeight; 
+static uint8_t moveSpeed, startHealth, maxMoveHeight; 
 
 /**
  * @brief Set the player variables
